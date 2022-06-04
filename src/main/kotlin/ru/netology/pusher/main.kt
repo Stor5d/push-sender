@@ -15,18 +15,37 @@ fun main() {
 
     FirebaseApp.initializeApp(options)
 
-    val message = Message.builder()
-        .putData("action", "LIKE")
-        .putData(
-            "content", """{
+    val message = createNewPostMessage()
+
+    FirebaseMessaging.getInstance().send(message)
+}
+
+fun createLikeMessage(): Message = Message.builder()
+    .putData("action", "LIKE")
+    .putData(
+        "content", """{
           "userId": 1,
           "userName": "Петя",
           "postId": 2,
           "postAuthor": "ФФФ"
         }""".trimIndent()
-        )
-        .setToken("dI41L01BRuStp20wzajCTq:APA91bEL9NsiidPpDh9M3S3HD-FFy9Q9K2hoV8QrqL0nk0RfkkUICmLugDlaR-i2GOOfPsr2ZzLf1aRs0VA9h4tBePb01zILZaOhjmR4RDWwzIazmMWK4EeBbB5n1FDPSWIX1o0S_awq")
-        .build()
+    )
+    .setToken(TOKEN)
+    .build()
 
-    FirebaseMessaging.getInstance().send(message)
-}
+fun createNewPostMessage(): Message = Message.builder()
+    .putData("action", "NEW_POST")
+    .putData(
+        "content", """{
+          "userId": 1,
+          "userName": "Петя",
+          "postId": 2,
+          "postAuthor": "ФФФ",
+          "contentText": "Колумбийская певица Шакира подтвердила, что расстается со своим партнером, футболистом «Барселоны» Жераром Пике, от которого у нее двое детей."
+        }""".trimIndent()
+    )
+    .setToken(TOKEN)
+    .build()
+
+const val TOKEN =
+    "dI41L01BRuStp20wzajCTq:APA91bEL9NsiidPpDh9M3S3HD-FFy9Q9K2hoV8QrqL0nk0RfkkUICmLugDlaR-i2GOOfPsr2ZzLf1aRs0VA9h4tBePb01zILZaOhjmR4RDWwzIazmMWK4EeBbB5n1FDPSWIX1o0S_awq"
