@@ -4,3 +4,4 @@ constants.kt
 /.gradle/
 /build/
 /build/classes/
+/gradle/
